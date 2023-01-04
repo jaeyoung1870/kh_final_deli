@@ -139,15 +139,9 @@
         parseInt($("#order_price").html(${orderOrdersDTO.order_price}));
         parseInt($("#delivery_tip").html(${orderOrdersDTO.delivery_tip}));
 
-        <%--$("#order_price").val(${orderOrdersDTO.order_price});--%>
-        <%--$("#delivery_tip").val(${orderOrdersDTO.delivery_tip})--%>
-
         initPage();
         setCouponList();
-        // var orderPrice = parseInt($("#order_price").html());
-        // var deliveryPrice = parseInt($("#delivery_tip").html());
         $("#pay_price").html(${orderOrdersDTO.order_price}+${orderOrdersDTO.delivery_tip});
-        <%--$("#pay_price").val(${orderOrdersDTO.order_price}+${orderOrdersDTO.delivery_tip});--%>
 
     }
 
@@ -163,15 +157,14 @@
                 address2 = data.address2;
                 phoneNum = data.phoneNum;
                 ownPoint = data.ownPoint;
-                //deliTip = data.delivery_tip;
+
 
                 $("#add_seq").val(addSeq);
                 $("#address1").html(address1);
                 $("#address2").val(address2);
                 $("#phoneNum").val(phoneNum);
                 $("#ownPoint").html(ownPoint);
-                // $("#ownPoint").val(ownPoint);
-                //$("#delivery_tip").val(deliTip);
+
 
                 onchangeOwnPoint();
             },
@@ -197,7 +190,7 @@
                         var type = '';
                         if (data[i].cpType == 'percent') type = '%';
                         else if(data[i].cpType == 'amount') type = '원';
-                        // else (type = data[i].cpType);
+
                         html += '<a class="couponInfo" id="coupon' + i + '" href="javascript:choiceCoupon(' + i + ');">' + data[i].cpName + " || " + data[i].discount_coupon + type + '</a><br>';
                         html += '<input type="hidden" value="' + data[i].cp_seq + '" id="cpSeq' + i + '"> ';
                         html += '<input type="hidden" value="' + data[i].cpName + '" id="cpName' + i + '"> ';
@@ -220,7 +213,7 @@
     }
 
     function choiceCoupon(param) {
-        //넘겨줘야하는 거 ==> 쿠폰 이름, 시퀀스, 할인율 (discount, type)
+
         var cpName = $("#cpName" + param).val();
         var cpSeq = $("#cpSeq" + param).val();
         var cpDiscount = $("#cpDiscount" + param).val();
@@ -238,9 +231,7 @@
 
         // 결제금액 출력
         var orderPrice = ($("#order_price").html());
-        console.log(orderPrice);
-        // var discountPrice = $("#discount_coupon").val();
-        // var discountPrice = orderPrice * (1 - cpName.replace(/\D/g,'')/100);
+
 
         if(cpType == 'percent') {
             var discountPrice = Math.floor(orderPrice * Number(cpDiscount) / 100);
@@ -250,25 +241,13 @@
         var usePoint = Number($("#use_point").val());
         var deliveryTip = parseInt($("#delivery_tip").html());
         var payPrice = orderPrice - (discountPrice + usePoint) + deliveryTip;
-        console.log(cpDiscount);
-        console.log(deliveryTip);
-        console.log(cpType);
-        console.log(usePoint);
-        console.log(payPrice);
+
         if(payPrice < 0){
             payPrice = 0;
         }
         $("#discountPrice").html(discountPrice);
         $("#pay_price").html(payPrice);
-        // $("#discountPrice").val(discountPrice);
-        // $("#discount_coupon").val(discountPrice);
-        // $("#discount_coupon").text(discountPrice);
 
-        /*
-        * 쿠폰 정보 빼오는 방법
-        *
-        * $("#chCp").attr('cpSeq'); ==> 하면 li 태그에 저장해둔 쿠폰 시퀀스 가져올 수 있다.
-        * */
     }
 
     function onclickBtnChgAddr() {
@@ -316,8 +295,7 @@
                 error: function () {
                 }
             }).done(function () {
-                // alert("주소변경 되었습니다.");
-                // location.href="/home";
+
             });
         }
     }
@@ -360,7 +338,6 @@
             usePoint = 0;
             $("#use_point").html(0);
         }
-
 
         let cpDiscount = Number($("#discountPrice").html());
         $("#use_point").html(usePoint);
@@ -468,7 +445,7 @@
                 $("#ownPointInput").val(parseInt($("#ownPoint").html()));
                 $("#insertForm").submit();
             } else {
-                var msg = '결제에 실패하였습니다.';
+                var msg = '오류로 인하여 결제가 시작되지 못했습니다.';
             }
             alert(msg);
         });
